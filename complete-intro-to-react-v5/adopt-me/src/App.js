@@ -12,7 +12,6 @@ const App = () => {
     {},
     React.createElement("h1", {}, "Adopt Me !"),
     [
-      React.createElement("h2", {}, "Adopt Me Again !!"),
       React.createElement(Pet, {
         name: "rusty",
         animal: "dog",
