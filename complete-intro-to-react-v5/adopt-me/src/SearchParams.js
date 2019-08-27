@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ANIMALS } from '@frontendmasters/pet'
+import React, { useState, useEffect } from 'react';
+import pet, { ANIMALS } from '@frontendmasters/pet';
 import useDropdown from './useDropdown';
 
 const SearchParams = () => {
@@ -9,11 +9,22 @@ const SearchParams = () => {
     // I say this is a feature because it makes you explicit on how you handle your data.
     // Let's go make it work.
     // const location = 'Whitefield,BLR';
+    
+    // SEQUENCE IS NECCESSARY
     const [ location, updateLocation ] = useState('Whitefield,BLR');
+    const [ breeds, updateBreeds ] = useState([]);
     // use pet API from frontend-masters
     const [ animal, AnimalDropdown ] = useDropdown('Animal', 'dog', ANIMALS);
     const [ breed, BreedDropDown, updateBreed ] = useDropdown('Breed', '', breeds);
-    const [ breeds, updateBreeds ] = useState([]);
+    
+    useEffect(() => {
+        updateBreed([]);
+        updateBreed('');
+        pet.breeds(animal).then(({ breeds }) => {
+            const breedStr = breeds.map(({ name }) => name )
+            updateBreeds(breedStr);
+        }, console.error);
+    }, [animal, updateBreed])
 
    return (
        <div className="search-params">
@@ -28,33 +39,6 @@ const SearchParams = () => {
             <AnimalDropdown />
             <BreedDropDown />
             <button>Submit</button>
-            {/* <label htmlFor='animal'>
-                Animal
-                <select id='animal' value={animal}
-                onChange={e => updateAnimal(e.target.value)}
-                onBlur={e => updateAnimal(e.target.value)}>
-                    <option>All</option>
-                    {ANIMALS.map(animal => 
-                        <option key={animal} value='animal'>{animal}</option>)}
-                </select>
-            </label>
-            <label htmlFor='breed'>
-                Breed
-                <select
-                disabled={!breed.length}
-                id='breed'
-                value={breed}
-                onChange={e => {updateBreed(e.target.value)}}
-                onBlur={e => {updateBreed(e.target.value)}}>
-                    <option />
-                    {breeds.map(breedStr => {
-                        <option
-                        key={breedStr}
-                        value={breedStr}>{breedStr}</option>
-                    })}
-                </select>
-            </label> */}
-            
            </form>
        </div>
    )
