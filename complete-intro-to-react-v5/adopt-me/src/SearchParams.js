@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import pet, { ANIMALS } from '@frontendmasters/pet';
 import useDropdown from './useDropdown';
+import Results from './Results'
 
 const SearchParams = () => {
     // if we type in our input and it re-renders, what gets out in the input tag?
@@ -9,14 +10,22 @@ const SearchParams = () => {
     // I say this is a feature because it makes you explicit on how you handle your data.
     // Let's go make it work.
     // const location = 'Whitefield,BLR';
-    
+
     // SEQUENCE IS NECCESSARY
-    const [ location, updateLocation ] = useState('Whitefield,BLR');
+    const [ location, updateLocation ] = useState('Whitefield, BLR');
     const [ breeds, updateBreeds ] = useState([]);
-    // use pet API from frontend-masters
+    const [ pets, setPets ] = useState([]);
     const [ animal, AnimalDropdown ] = useDropdown('Animal', 'dog', ANIMALS);
     const [ breed, BreedDropDown, updateBreed ] = useDropdown('Breed', '', breeds);
-    
+   
+    async function requestPets() {
+        const { animals } = await pet.animals({
+            location,
+            breed,
+            type: animal
+        });
+        setPets( animals || [] );
+    }
     useEffect(() => {
         updateBreed([]);
         updateBreed('');
@@ -29,6 +38,11 @@ const SearchParams = () => {
    return (
        <div className="search-params">
            <form>
+               <form 
+               onSubmit={ e => {
+                   e.preventDefault();
+                   requestPets();
+               }}/>
             <label htmlFor='location'>Location
                 <input
                 id='location'
@@ -40,6 +54,7 @@ const SearchParams = () => {
             <BreedDropDown />
             <button>Submit</button>
            </form>
+           <Results pets={pets}/>
        </div>
    )
 };
