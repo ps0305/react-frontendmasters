@@ -3,14 +3,14 @@ import { Link } from '@reach/router';
 
 const Pet = props => {
   const { name, animal, breed, media, location, id } = props; 
-
-    let hero = 'http://placecorgi.com/300/300';
-    if(media.length) {
-      hero = media[0].small;
-    }
+  console.log('pet props',animal, breed, name);
+  let hero = 'http://placecorgi.com/300/300';
+  if(media.length) {
+    hero = media[0].small;
+  }
   
-    return (
-      <Link to={`/details/${id}`} className="pet">
+  return (
+    <Link to={`/details/${id}`} className="pet">
         <div className="image-container">
           <img src={hero} alt={name} />
         </div>

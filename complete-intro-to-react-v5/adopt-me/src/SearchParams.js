@@ -22,13 +22,15 @@ const SearchParams = () => {
         const { animals } = await pet.animals({
             location,
             breed,
-            type: animal
+            type: animal,
         });
+        console.log('animals', animals);
         setPets( animals || [] );
     }
     useEffect(() => {
         updateBreed([]);
         updateBreed('');
+        console.log('searchParams',pet);
         pet.breeds(animal).then(({ breeds }) => {
             const breedStr = breeds.map(({ name }) => name )
             updateBreeds(breedStr);
