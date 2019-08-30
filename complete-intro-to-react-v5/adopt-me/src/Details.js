@@ -1,6 +1,7 @@
 import React from 'react';
 import pet from '@frontendmasters/pet';
 import Carousel from './Carousel';
+import ErrorBoundary from './ErrorBoundary';
 
 // const Details = props => {
 //     return (
@@ -14,8 +15,9 @@ import Carousel from './Carousel';
 //     )
 // }
 class Details extends React.Component {
-  state = { loading: true };
+    state = { loading: true };
     componentDidMount() {
+        // throw new Error('lol');
         pet.animal(this.props.id)
         .then(({ animal }) => {
             this.setState({
@@ -29,7 +31,7 @@ class Details extends React.Component {
             })
         }).catch((err) => this.setState({ error: err }));
     }
-
+    
     render() {
         if ( this.state.loading ) {
             return <h1>Loading...</h1>
@@ -51,3 +53,10 @@ class Details extends React.Component {
 }
 
 export default Details;
+// export default function DetailsWithErrorBoundary(props) {
+//     return (
+//         <ErrorBoundary>
+//             <Details {...props}/>
+//         </ErrorBoundary>
+//     );
+// }
