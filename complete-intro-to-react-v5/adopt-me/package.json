@@ -21,6 +21,7 @@
   },
   "scripts": {
     "clear-build-cache": "rm -rf .cache/ dist/",
+    "prod": "parcel build src/index.html",
     "dev": "parcel src/index.html",
     "dev:mock": "cross-env PET_MOCK=mock parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
