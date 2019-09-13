@@ -4,6 +4,7 @@ import { Router, Link } from '@reach/router';
 import Details from './Details';
 import SearchParams from './SearchParams';
 import ThemeContext from './ThemeContext';
+import Navbar from './Navbar'
 
 
 const App = () => {
@@ -14,9 +15,9 @@ const App = () => {
     // Then whatever you pass into the value prop (we passed in the complete hook, the value and updater pair) will exit on the other side whenever we ask for it.
     <ThemeContext.Provider value={theme}>
       <div>
-        <header>
+        <Navbar>
           <Link to="/">Adopt Me!</Link>
-        </header>
+        </Navbar>
         ;
         <Router>
           <SearchParams path="/" />
